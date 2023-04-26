@@ -8,14 +8,14 @@
  */
 size_t list_len(const list_t *h)
 {
-	size_t index = zero;
+	size_t i = zero;
 
 	while (h)
 	{
 		h = h->next;
-		index++;
+		i++;
 	}
-	return (index);
+	return (i);
 }
 
 /**
@@ -27,30 +27,30 @@ size_t list_len(const list_t *h)
 char **list_to_strings(list_t *head)
 {
 	list_t *node = head;
-	size_t j, index = list_len(head);
+	size_t i = list_len(head), j;
 	char **strs;
 	char *str;
 
-	if (head == NULL || index == NULL)
+	if (!head || !i)
 		return (NULL);
-	strs = malloc(sizeof(char *) * (index + 1));
-	if (strs == NULL)
+	strs = malloc(sizeof(char *) * (i + one));
+	if (!strs)
 		return (NULL);
-	for (index = zero; node; node = node->next, index++)
+	for (i = zero; node; node = node->next, i++)
 	{
-		str = malloc(_strlen(node->str) + 1);
-		if (str == NULL)
+		str = malloc(_strlen(node->str) + one);
+		if (!str)
 		{
-			for (j = zero; j < index; j++)
+			for (j = zero; j < i; j++)
 				free(strs[j]);
 			free(strs);
 			return (NULL);
 		}
 
 		str = _strcpy(str, node->str);
-		strs[index] = str;
+		strs[i] = str;
 	}
-	strs[index] = NULL;
+	strs[i] = NULL;
 	return (strs);
 }
 
@@ -62,7 +62,7 @@ char **list_to_strings(list_t *head)
  */
 size_t print_list(const list_t *h)
 {
-	size_t index = zero;
+	size_t i = zero;
 
 	while (h)
 	{
@@ -72,9 +72,9 @@ size_t print_list(const list_t *h)
 		_puts(h->str ? h->str : "(nil)");
 		_puts("\n");
 		h = h->next;
-		index++;
+		i++;
 	}
-	return (index);
+	return (i);
 }
 
 /**
@@ -87,12 +87,12 @@ size_t print_list(const list_t *h)
  */
 list_t *node_starts_with(list_t *node, char *prefix, char c)
 {
-	char *x = NULL;
+	char *p = NULL;
 
 	while (node)
 	{
-		x = starts_with(node->str, prefix);
-		if (x && ((*x == c) || (c == n_one)))
+		p = starts_with(node->str, prefix);
+		if (p && ((c == n_one) || (*p == c)))
 			return (node);
 		node = node->next;
 	}
@@ -108,14 +108,14 @@ list_t *node_starts_with(list_t *node, char *prefix, char c)
  */
 ssize_t get_node_index(list_t *head, list_t *node)
 {
-	size_t index = zero;
+	size_t i = zero;
 
 	while (head)
 	{
 		if (head == node)
-			return (index);
+			return (i);
 		head = head->next;
-		index++;
+		i++;
 	}
 	return (n_one);
 }

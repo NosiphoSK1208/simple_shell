@@ -18,46 +18,24 @@
 #define BUF_FLUSH -1
 
 /* for command chaining */
-#define CMD_NORM 0
-#define CMD_OR 1
-#define CMD_AND 2
-#define CMD_CHAIN 3
+#define CMD_NORM	0
+#define CMD_OR		1
+#define CMD_AND		2
+#define CMD_CHAIN	3
 
 /* for convert_number() */
-#define CONVERT_LOWERCASE 1
-#define CONVERT_UNSIGNED 2
+#define CONVERT_LOWERCASE	1
+#define CONVERT_UNSIGNED	2
 
 /* 1 if using system getline() */
 #define USE_GETLINE 0
 #define USE_STRTOK 0
 
-#define HIST_FILE ".simple_shell_history"
-#define HIST_MAX 4096
+#define HIST_FILE	".simple_shell_history"
+#define HIST_MAX	4096
 
 extern char **environ;
 
-/**
- * enum status_code_num - singly linked list
- * @n_one: as -1
- * @one: as 1
- * @two: as 2
- * @zero: as 0
- * @code_true: as 0
- * @code_false: points to false
- * @code_error: points to false
- * @code_success: points to true
- */
-enum status_code_num
-{
-	n_one = -1,
-	one = 1,
-	two = 2,
-	zero = 0,
-	code_true = 1,
-	code_false = 0,
-	code_error = 1,
-	code_success = 0
-};
 
 /**
  * struct liststr - singly linked list
@@ -111,17 +89,38 @@ typedef struct passinfo
 	int env_changed;
 	int status;
 
-	char **cmd_buf;	  /* pointer to cmd ; chain buffer, for memory mangement */
+	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 	int cmd_buf_type; /* CMD_type ||, &&, ; */
 	int readfd;
 	int histcount;
 } info_t;
 
-#define INFO_INIT
+/**
+ * enum status_code_num - singly linked list
+ * @n_one: as -1
+ * @one: as 1
+ * @two: as 2
+ * @zero: as 0
+ * @code_true: as 0
+ * @code_false: points to false
+ * @code_error: points to false
+ * @code_success: points to true
+ */
+enum status_code_num
 {
-	NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL,
-		0, 0, 0
-}
+	n_one = -1,
+	one = 1,
+	two = 2,
+	zero = 0,
+	code_true = 1,
+	code_false = 0,
+	code_error = 1,
+	code_success = 0
+};
+
+#define INFO_INIT \
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
+	0, 0, 0}
 
 /**
  *struct builtin - contains a builtin string and related function
@@ -133,6 +132,7 @@ typedef struct builtin
 	char *type;
 	int (*func)(info_t *);
 } builtin_table;
+
 
 /* toem_shloop.c */
 int hsh(info_t *, char **);
